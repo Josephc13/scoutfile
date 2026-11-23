@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scoutfile | Every company file, found in seconds</title>
+<meta name="description" content="Scoutfile is an AI assistant that finds the right company document in seconds, across every department.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="logo" href="index.html"><b>🔎</b><b>Scout<span>file</span></b></a>
+  <div class="links">
+    <a href="#features">Features</a>
+    <a href="#roi">Time-savings calculator</a>
+    <a class="keep" href="how-it-works.html">How it works</a>
+  </div>
+</div></nav>
+
+<header class="hero">
+  <video autoplay muted loop playsinline preload="auto" poster="poster.jpg">
+    <source src="video.mp4" type="video/mp4">
+  </video>
+  <div class="wrap">
+    <div class="eyebrow">AI search for your company's files</div>
+    <h1>Stop digging. Ask Scout.</h1>
+    <p class="lead">Scoutfile is an AI assistant that searches IT, HR, Sales, Operations and every other department's files at once, and points you to the exact document in seconds.</p>
+    <div class="ctas">
+      <a class="btn btn-primary" href="how-it-works.html">See how it works →</a>
+      <a class="btn btn-ghost" href="#" data-open-chat>Try the chatbot</a>
+    </div>
+  </div>
+</header>
+
+<section id="features"><div class="wrap">
+  <h2>One question instead of ten folders</h2>
+  <p class="sub">Employees lose time clicking through look-alike SharePoint sites. Scout knows which department owns what, so people ask in plain English and get the file.</p>
+  <div class="grid3">
+    <div class="card"><div class="icon">🗂️</div><h3>Department-aware</h3><p>Pick IT, HR, Sales &amp; Marketing, Operations, or search all sites at once.</p></div>
+    <div class="card"><div class="icon">💬</div><h3>Plain-English questions</h3><p>"Where's the near-miss report form?" gets the form, not a list of 40 folders.</p></div>
+    <div class="card"><div class="icon">⚡</div><h3>Answers in seconds</h3><p>Built for people on job sites and in the field who can't hunt through a file tree.</p></div>
+  </div>
+</div></section>
+
+<section id="roi" style="background:#0f141b;border-top:1px solid var(--line);border-bottom:1px solid var(--line)"><div class="wrap">
+  <h2>How much time would Scout save your team?</h2>
+  <p class="sub">Move the sliders to match your company. The numbers update live.</p>
+  <div class="calc">
+    <div class="controls">
+      <div class="field"><label for="emp">Employees <output id="empOut">250</output></label>
+        <input id="emp" type="range" min="10" max="5000" step="10" value="250"></div>
+      <div class="field"><label for="mins">Minutes per day each person spends looking for files <output id="minsOut">20</output></label>
+        <input id="mins" type="range" min="5" max="90" step="5" value="20"></div>
+      <div class="field"><label for="wage">Average hourly cost per employee <output id="wageOut">$45</output></label>
+        <input id="wage" type="range" min="15" max="150" step="5" value="45"></div>
+      <div class="field" style="margin-bottom:0"><label for="cut">Search time Scout removes <output id="cutOut">60%</output></label>
+        <input id="cut" type="range" min="10" max="90" step="5" value="60"></div>
+    </div>
+    <div class="result">
+      <div class="big" id="hours">0</div>
+      <div class="label">hours saved per year</div>
+      <div class="row"><span>Value of that time</span><strong id="money">$0</strong></div>
+      <div class="row"><span>Per employee, per week</span><strong id="perWeek">0 min</strong></div>
+      <div class="row"><span>Full-time workers' worth of hours</span><strong id="fte">0</strong></div>
+      <div class="bar"><i id="barFill"></i></div>
+    </div>
+  </div>
+</div></section>
+
+<div class="wrap xfactor">
+  <strong>Creative X-Factor: live time-savings calculator.</strong>
+  Visitors set their headcount, search time, hourly cost and expected improvement, and the page instantly calculates hours, dollars and full-time-equivalent workers saved per year. It turns the pitch into a personalized business case.
+</div>
+
+<script>
+(function(){
+  var ids=["emp","mins","wage","cut"], $=function(i){return document.getElementById(i)};
+  function fmt(n){return Math.round(n).toLocaleString("en-US")}
+  function calc(){
+    var e=+$("emp").value, m=+$("mins").value, w=+$("wage").value, c=+$("cut").value/100;
+    $("empOut").textContent=fmt(e); $("minsOut").textContent=m; $("wageOut").textContent="$"+w; $("cutOut").textContent=Math.round(c*100)+"%";
+    var hours=e*m*c*240/60;                 // 240 workdays a year
+    $("hours").textContent=fmt(hours);
+    $("money").textContent="$"+fmt(hours*w);
+    $("perWeek").textContent=fmt(m*c*5)+" min";
+    $("fte").textContent=(hours/1920).toFixed(1);  // 1,920 work hours a year
+    $("barFill").style.width=Math.min(100,c*100)+"%";
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",calc)}); calc();
+})();
+</script>
+<script src="chat.js"></script>
+</body>
+</html>
